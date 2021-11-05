@@ -1,4 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as faker from 'faker';
+import { nanoid } from 'nanoid';
 import { Document } from 'mongoose';
 
 type Nullable<T> = T | null;
@@ -28,6 +30,16 @@ export class User {
 
   @Prop({ type: String })
   _individual?: Nullable<string>;
+
+  static makeMockUser(): User {
+    return {
+      _id: nanoid(24),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      role: 'admin',
+      avatar: faker.internet.avatar(),
+    }
+  }
 }
 
 
