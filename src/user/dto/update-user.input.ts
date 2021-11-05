@@ -1,0 +1,6 @@
+// import { CreateUserInput } from './signUpInput';
+// import { PartialType } from '@nestjs/mapped-types';
+
+// export class UpdateUserInput extends PartialType(CreateUserInput) {
+//   id: number;
+// }

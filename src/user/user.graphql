@@ -1,0 +1,147 @@
+type User {
+  _id: ID!
+  name: String
+  email: String!
+  password: String!
+  createdAt: String
+  updatedAt: String
+  avatar: String
+  role: String!
+  refreshToken: String
+  _individual: Individual
+  # _company: Company
+}
+
+type Token {
+  token: String
+  message: String
+}
+
+type Individual {
+  name: String
+  country: String
+}
+
+type GoogleProfile {
+  name: String
+  avatar: String
+  email: String
+}
+
+
+input GoogleSignInInput {
+  accessToken: String
+}
+
+input SignUpInput {
+  name: String
+  avatar: String
+  companyName: String!
+  country: String
+  type: String
+  listed: Boolean
+  businessCategory: String
+  CEOName: String
+  foundedIn: String
+  companyCode: String
+  taxCode: String
+  logo: String
+  role: String
+  email: String #reject gmail, yahoo, hotmail, icloud
+  enterpriseEmail: String
+  password: String
+  revenue: String
+  headquarter: String
+  employees: String
+  stock: String
+  exchange: String
+}
+
+input IndividualSignUpInput {
+  email: String!
+  password: String!
+  country: String
+  name: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+  name: String
+  email: String!
+  password: String!
+  avatar: String
+  role: String!
+  refreshToken: String
+  createdAt: String
+  updatedAt: String
+}
+
+
+input RequestPasswordResetInput {
+  email: String!
+}
+
+input ResetPasswordInput {
+  email: String!
+  token: String!
+  password: String!
+}
+
+type UserPayload {
+  _id: String
+  name: String
+  role: String
+  email: String #reject gmail, yahoo, hotmail, icloud
+  avatar: String
+  _company: String
+}
+
+type SignUpResponse {
+  message: String
+  error: Boolean
+}
+
+type IndividualSignUpResponse {
+  message: String
+  error: Boolean
+}
+
+type SignInResponse {
+  message: String
+  token: String
+  error: Boolean
+}
+
+type GoogleSignInResponse {
+  token: String
+  googleProfile: GoogleProfile
+  isVerify: Boolean
+}
+
+
+type SuccessMessage {
+  message: String!
+}
+
+type UsersPayload {
+  users: [UserPayload]!
+  count: String!
+}
+
+type Query {
+  getAuthUser: UserPayload
+  users: [User]!
+  user(id: ID!): User
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+  businessSignup(input: SignUpInput!): SignUpResponse
+  individualSignup(input: IndividualSignUpInput!): IndividualSignUpResponse
+  signIn(input: SignInInput!): SignInResponse
+  googleSignIn(input: GoogleSignInInput!): GoogleSignInResponse
+}
