@@ -58,6 +58,16 @@ export class CreateUserInput {
     updatedAt?: Nullable<string>;
 }
 
+export class UpdateUserInput {
+    _id: string;
+    name?: Nullable<string>;
+    avatar?: Nullable<string>;
+    role?: Nullable<string>;
+    refreshToken?: Nullable<string>;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+}
+
 export class RequestPasswordResetInput {
     email: string;
 }
@@ -128,6 +138,11 @@ export class GoogleSignInResponse {
     isVerify?: Nullable<boolean>;
 }
 
+export class DeleteUserResponse {
+    success: boolean;
+    message?: Nullable<string>;
+}
+
 export class SuccessMessage {
     message: string;
 }
@@ -148,13 +163,13 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract businessSignup(input: SignUpInput): Nullable<SignUpResponse> | Promise<Nullable<SignUpResponse>>;
+    abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract individualSignup(input: IndividualSignUpInput): Nullable<IndividualSignUpResponse> | Promise<Nullable<IndividualSignUpResponse>>;
+    abstract getUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract signIn(input: SignInInput): Nullable<SignInResponse> | Promise<Nullable<SignInResponse>>;
+    abstract getUsers(_id: string): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
-    abstract googleSignIn(input: GoogleSignInInput): Nullable<GoogleSignInResponse> | Promise<Nullable<GoogleSignInResponse>>;
+    abstract removeUser(_id: string): Nullable<DeleteUserResponse> | Promise<Nullable<DeleteUserResponse>>;
 }
 
 type Nullable<T> = T | null;

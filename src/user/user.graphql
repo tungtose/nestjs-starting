@@ -80,6 +80,16 @@ input CreateUserInput {
   updatedAt: String
 }
 
+input UpdateUserInput {
+  _id: String!
+  name: String
+  avatar: String
+  role: String
+  refreshToken: String
+  createdAt: String
+  updatedAt: String
+}
+
 
 input RequestPasswordResetInput {
   email: String!
@@ -122,6 +132,11 @@ type GoogleSignInResponse {
   isVerify: Boolean
 }
 
+type DeleteUserResponse {
+  success: Boolean!
+  message: String
+}
+
 
 type SuccessMessage {
   message: String!
@@ -140,8 +155,12 @@ type Query {
 
 type Mutation {
   createUser(input: CreateUserInput!): User
-  businessSignup(input: SignUpInput!): SignUpResponse
-  individualSignup(input: IndividualSignUpInput!): IndividualSignUpResponse
-  signIn(input: SignInInput!): SignInResponse
-  googleSignIn(input: GoogleSignInInput!): GoogleSignInResponse
+  updateUser(input: UpdateUserInput!): User
+  getUser(_id: String!): User
+  getUsers(_id: String!): [User]
+  removeUser(_id: String!): DeleteUserResponse
+  # businessSignup(input: SignUpInput!): SignUpResponse
+  # individualSignup(input: IndividualSignUpInput!): IndividualSignUpResponse
+  # signIn(input: SignInInput!): SignInResponse
+  # googleSignIn(input: GoogleSignInInput!): GoogleSignInResponse
 }

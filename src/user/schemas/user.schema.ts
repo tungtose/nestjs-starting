@@ -5,6 +5,8 @@ type Nullable<T> = T | null;
 
 @Schema({ timestamps: true })
 export class User {
+  @Prop({ type: String })
+  _id: string;
 
   @Prop({ type: String })
   name?: Nullable<string>;

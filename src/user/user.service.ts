@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from '@generated/graphql.schema';
+import { CreateUserInput, UpdateUserInput } from '@generated/graphql.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 
@@ -11,24 +11,23 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
-    const user = new this.userModel(createUserInput);
-    await user.save()
+    const user = this.userModel.create(createUserInput);
     return user
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    return this.userModel.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(_id: string): Promise<User> {
+    return await this.userModel.findById(_id);
   }
 
-  update(id: number, updateUserInput: any) {
-    return `This action updates a #${id} user`;
+  async update(_id: string, updateUserInput: UpdateUserInput): Promise<User> {
+    return await this.userModel.findByIdAndUpdate(_id, updateUserInput, { new: true });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(_id: string): Promise<User> {
+    return await this.userModel.findByIdAndDelete(_id);
   }
 }
