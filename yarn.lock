@@ -1141,6 +1141,13 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
+"@types/ramda@^0.27.46":
+  version "0.27.46"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.46.tgz#05ab23a4fd75668d26c674448f3d55cc215edd75"
+  integrity sha512-PpHUGfV3AkUT57kP9GzS6NIHHebd5wHuA19tV/SDqrVNkHrJJSfNEq/imyt7JGKBdn7VgktXUN137mrI/shzkw==
+  dependencies:
+    ts-toolbelt "^6.15.1"
+
 "@types/range-parser@*":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
@@ -2996,6 +3003,13 @@ graphql-tag@^2.11.0:
   dependencies:
     tslib "^2.1.0"
 
+graphql-tag@^2.12.6:
+  version "2.12.6"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
+  integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
+  dependencies:
+    tslib "^2.1.0"
+
 graphql-ws@5.5.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.5.1.tgz#f486fbcabe4ad31b661d1a88aadf0411f17fc219"
@@ -4578,6 +4592,11 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
+ramda@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
+  integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
+
 randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
@@ -5287,6 +5306,11 @@ ts-node@^10.0.0:
     diff "^4.0.1"
     make-error "^1.1.1"
     yn "3.1.1"
+
+ts-toolbelt@^6.15.1:
+  version "6.15.5"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
+  integrity sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==
 
 tsconfig-paths-webpack-plugin@3.5.1:
   version "3.5.1"

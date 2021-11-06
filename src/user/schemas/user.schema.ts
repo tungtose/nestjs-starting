@@ -7,7 +7,8 @@ type Nullable<T> = T | null;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ type: String })
+  // @Prop({ type: String })
+  // _id: string;
   _id: string;
 
   @Prop({ type: String })
@@ -31,6 +32,7 @@ export class User {
   @Prop({ type: String })
   _individual?: Nullable<string>;
 
+
   static makeMockUser(): User {
     return {
       _id: nanoid(24),
@@ -38,10 +40,13 @@ export class User {
       password: faker.internet.password(),
       role: 'admin',
       avatar: faker.internet.avatar(),
+      name: faker.internet.userName()
     }
   }
+
 }
 
+export type MockUser = User & { _id: string }
 
 export type UserDocument = User & Document;
 

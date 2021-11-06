@@ -1,7 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import * as R from 'ramda';
 import { AppModule } from './../src/app.module';
+import { User } from '../src/user/schemas/user.schema';
+import { print } from 'graphql/language/printer';
+import gql from 'graphql-tag';
+
+const CreateUserMutation = gql`
+ mutation ($input: CreateUserInput!){
+  createUser(input: $input) {
+    name
+    email
+    password
+    role
+    avatar
+  }
+}
+`
+const graphql = '/graphql'
+const mockUserInput = R.omit(['_id'], User.makeMockUser())
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -15,10 +33,23 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  afterAll(async () => {
+    await app.close();
   });
+
+  describe('User', () => {
+    it('should create a user', async () => {
+      const query = print(CreateUserMutation)
+      return request(app.getHttpServer())
+        .post(graphql)
+        .send({
+          query,
+          variables: { input: mockUserInput }
+        })
+        .expect(200)
+        .expect(res => {
+          expect(res.body.data.createUser).toEqual(mockUserInput);
+        })
+    })
+  })
 });
