@@ -18,6 +18,7 @@ import { CaslModule } from './casl/casl.module';
       debug: false,
       playground: true,
       installSubscriptionHandlers: true,
+      context: ({ req }) => ({ req })
     }),
   ],
   controllers: [AppController],
