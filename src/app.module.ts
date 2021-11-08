@@ -4,8 +4,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CaslModule } from './casl/casl.module';
 import validationSchema from './config/validationSchema';
 
@@ -38,14 +36,6 @@ import validationSchema from './config/validationSchema';
       }
     }),
 
-  ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
-    // },
   ],
 })
 
