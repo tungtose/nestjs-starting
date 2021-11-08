@@ -7,44 +7,23 @@
 
 /* tslint:disable */
 /* eslint-disable */
-export class GoogleSignInInput {
-    accessToken?: Nullable<string>;
-}
-
-export class SignUpInput {
-    name?: Nullable<string>;
-    avatar?: Nullable<string>;
-    companyName: string;
-    country?: Nullable<string>;
-    type?: Nullable<string>;
-    listed?: Nullable<boolean>;
-    businessCategory?: Nullable<string>;
-    CEOName?: Nullable<string>;
-    foundedIn?: Nullable<string>;
-    companyCode?: Nullable<string>;
-    taxCode?: Nullable<string>;
-    logo?: Nullable<string>;
-    role?: Nullable<string>;
-    email?: Nullable<string>;
-    enterpriseEmail?: Nullable<string>;
-    password?: Nullable<string>;
-    revenue?: Nullable<string>;
-    headquarter?: Nullable<string>;
-    employees?: Nullable<string>;
-    stock?: Nullable<string>;
-    exchange?: Nullable<string>;
-}
-
-export class IndividualSignUpInput {
-    email: string;
-    password: string;
-    country?: Nullable<string>;
-    name: string;
-}
-
 export class SignInInput {
     email: string;
     password: string;
+}
+
+export class RequestPasswordResetInput {
+    email: string;
+}
+
+export class ResetPasswordInput {
+    email: string;
+    token: string;
+    password: string;
+}
+
+export class GoogleSignInInput {
+    accessToken?: Nullable<string>;
 }
 
 export class CreateUserInput {
@@ -68,14 +47,38 @@ export class UpdateUserInput {
     updatedAt?: Nullable<string>;
 }
 
-export class RequestPasswordResetInput {
-    email: string;
+export class GoogleProfile {
+    name?: Nullable<string>;
+    avatar?: Nullable<string>;
+    email?: Nullable<string>;
 }
 
-export class ResetPasswordInput {
-    email: string;
-    token: string;
-    password: string;
+export class SignInResponse {
+    message?: Nullable<string>;
+    token?: Nullable<string>;
+    error?: Nullable<boolean>;
+}
+
+export class GoogleSignInResponse {
+    token?: Nullable<string>;
+    googleProfile?: Nullable<GoogleProfile>;
+    isVerify?: Nullable<boolean>;
+}
+
+export abstract class IMutation {
+    abstract signIn(input: SignInInput): Nullable<SignInResponse> | Promise<Nullable<SignInResponse>>;
+
+    abstract googleSignIn(input: GoogleSignInInput): Nullable<GoogleSignInResponse> | Promise<Nullable<GoogleSignInResponse>>;
+
+    abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract getUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract getUsers(_id: string): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract removeUser(_id: string): Nullable<DeleteUserResponse> | Promise<Nullable<DeleteUserResponse>>;
 }
 
 export class User {
@@ -91,20 +94,9 @@ export class User {
     _individual?: Nullable<Individual>;
 }
 
-export class Token {
-    token?: Nullable<string>;
-    message?: Nullable<string>;
-}
-
 export class Individual {
     name?: Nullable<string>;
     country?: Nullable<string>;
-}
-
-export class GoogleProfile {
-    name?: Nullable<string>;
-    avatar?: Nullable<string>;
-    email?: Nullable<string>;
 }
 
 export class UserPayload {
@@ -114,28 +106,6 @@ export class UserPayload {
     email?: Nullable<string>;
     avatar?: Nullable<string>;
     _company?: Nullable<string>;
-}
-
-export class SignUpResponse {
-    message?: Nullable<string>;
-    error?: Nullable<boolean>;
-}
-
-export class IndividualSignUpResponse {
-    message?: Nullable<string>;
-    error?: Nullable<boolean>;
-}
-
-export class SignInResponse {
-    message?: Nullable<string>;
-    token?: Nullable<string>;
-    error?: Nullable<boolean>;
-}
-
-export class GoogleSignInResponse {
-    token?: Nullable<string>;
-    googleProfile?: Nullable<GoogleProfile>;
-    isVerify?: Nullable<boolean>;
 }
 
 export class DeleteUserResponse {
@@ -158,18 +128,6 @@ export abstract class IQuery {
     abstract users(): Nullable<User>[] | Promise<Nullable<User>[]>;
 
     abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
-}
-
-export abstract class IMutation {
-    abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract updateUser(input: UpdateUserInput): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract getUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract getUsers(_id: string): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-
-    abstract removeUser(_id: string): Nullable<DeleteUserResponse> | Promise<Nullable<DeleteUserResponse>>;
 }
 
 type Nullable<T> = T | null;

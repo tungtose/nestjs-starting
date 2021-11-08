@@ -1,0 +1,41 @@
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input RequestPasswordResetInput {
+  email: String!
+}
+
+input ResetPasswordInput {
+  email: String!
+  token: String!
+  password: String!
+}
+
+input GoogleSignInInput {
+  accessToken: String
+}
+
+type GoogleProfile {
+  name: String
+  avatar: String
+  email: String
+}
+
+type SignInResponse {
+  message: String
+  token: String
+  error: Boolean
+}
+
+type GoogleSignInResponse {
+  token: String
+  googleProfile: GoogleProfile
+  isVerify: Boolean
+}
+
+extend type Mutation {
+  signIn(input: SignInInput!): SignInResponse
+  googleSignIn(input: GoogleSignInInput!): GoogleSignInResponse
+}

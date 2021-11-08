@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 
 type Nullable<T> = T | null;
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, collection: 'user' })
 export class User {
   // @Prop({ type: String })
   // _id: string;

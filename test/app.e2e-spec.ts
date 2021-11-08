@@ -42,6 +42,7 @@ describe('AppController (e2e)', () => {
       const query = print(CreateUserMutation)
       return request(app.getHttpServer())
         .post(graphql)
+        .set('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJ0dW5nQGNvZGVseW54LmlvIiwiX2lkIjoiMTIzNCIsInJvbGUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJhY3Rpb24iOiJyZWFkIiwic3ViamVjdCI6ImFsbCJ9XSwiaWF0IjoxNjM2MzA0NTQ2LCJleHAiOjE2MzYzMDgxNDZ9.6BmewDZx56p--QyMiIOUgPHFU4j1hDNkXCsXQt9qhcc')
         .send({
           query,
           variables: { input: mockUserInput }

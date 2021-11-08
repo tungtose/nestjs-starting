@@ -1,4 +1,4 @@
-import { Ability, InferSubjects, AbilityBuilder, AbilityClass, ExtractSubjectType, SubjectRawRule, SubjectType, MongoQuery } from '@casl/ability'
+import { Ability, InferSubjects, AbilityBuilder, AbilityClass, SubjectRawRule, MongoQuery } from '@casl/ability'
 import { Injectable } from '@nestjs/common';
 import { User } from '@generated/graphql.schema';
 
@@ -10,7 +10,7 @@ export enum Action {
   Delete = 'delete',
 }
 
-type Subjects = InferSubjects<typeof User> | 'all' | 'user';
+export type Subjects = 'all' | 'user';
 
 export type AppAbility = Ability<[Action, Subjects]>;
 
@@ -22,8 +22,8 @@ export interface IUserPayload {
   _id: string;
   role: string;
   permissions: SubjectRawRule<
-    string,
-    SubjectType,
+    Action,
+    Subjects,
     MongoQuery<Record<string | number | symbol, unknown>>
   >[];
 }
@@ -36,18 +36,22 @@ export class CaslAbilityFactory {
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
 
+    console.log("MY USser:",  user)
+
     if (user.role === 'admin') {
       can(Action.Manage, 'all'); // read-write access to everything
     } else {
       can(Action.Read, 'all'); // read-only access to everything
     }
+
+    for(const permission of user.permissions) {
+      const {action, subject} = permission;
+      can(action, subject)
+    }
+
     // can(Action.Update, Article, { authorId: user.id });
     // cannot(Action.Delete, Article, { isPublished: true });
-    new Ability(user.permissions)
-
-    return build({
-      // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
-      detectSubjectType: item => item.constructor as ExtractSubjectType<Subjects>
-    });
+  
+    return build();
   }
 }

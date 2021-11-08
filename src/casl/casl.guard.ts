@@ -2,7 +2,7 @@ import { Ability, AbilityTuple, MongoQuery, Subject } from '@casl/ability';
 import { SetMetadata, Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { AppAbility, CaslAbilityFactory } from './casl-ability.factory';
+import { Action, AppAbility, CaslAbilityFactory, Subjects } from './casl-ability.factory';
 
 export interface IPermissionHandler {
   handle(
@@ -23,8 +23,8 @@ export type PermissionHandlerCallback = (
 export type PermissionHandler = IPermissionHandler | PermissionHandlerCallback;
 
 export interface IPermission {
-  action: string;
-  subject: string;
+  action: Action;
+  subject: Subjects;
 }
 export interface IUserPayload {
   _id: string;
@@ -44,6 +44,14 @@ export class PermissionGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
+    const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
+      return true;
+    }
+
     const gqlContext = GqlExecutionContext.create(context);
 
     const permissionsHandler =
@@ -52,23 +60,31 @@ export class PermissionGuard implements CanActivate {
         gqlContext.getHandler(),
       ) || [];
 
+    if (!gqlContext.getContext().req.user) {
+      console.error("MATCH NO CONTEXT!")
+      return false;
+    }
 
+    const user: IUserPayload = gqlContext.getContext().req.user;
+    const permissions = user.permissions.map((p) => ({
+      action: p.action,
+      subject: p.subject,
+    }));
 
-      console.log("Ctx", gqlContext.getContext())
- 
-      if (!gqlContext.getContext().user) {
-        console.log("MATCH NO CONTEXT!")
-        return false;
-      }
-  
-    const user: IUserPayload = gqlContext.getContext().user;
-    // const permissions = user.permissions.map((p) => ({
-    //   action: p.action,
-    //   subject: p.subject,
-    // }));
+    user.permissions = permissions
+
+    console.log("USER:", user)
     const ability = this.caslAbilityFactory.createForUser(user);
 
+    console.log("ABILITY:", JSON.stringify(ability))
 
+
+    const a = permissionsHandler.map((handler) => {
+      console.log({handler, ability})
+      return this.execPermissionHandler(handler, ability)
+    })
+
+    console.log("AAA:", a)
     return permissionsHandler.every((handler) =>
       this.execPermissionHandler(handler, ability),
     );
