@@ -1,7 +1,7 @@
-import { SignInInput, SignInResponse } from '@generated/graphql.schema';
+import { SignInInput, SignInResponse } from '../generated/graphql.schema';
 import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import { User } from '@user/schemas/user.schema';
+import { User } from '../user/schemas/user.schema';
 import { AuthenticationError } from 'apollo-server-errors';
 import { AuthService } from './auth.service';
 import {GqlAuthGuard} from './guards/gql.guard';
